@@ -1,6 +1,6 @@
-# [Team Name]
+# [Group 3]
 ## Scrum Master
-[Team Member 1]
+[William Harvey]
 ## Product Owner
 [Team Member 2]
 ## Developer
