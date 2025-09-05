@@ -2,8 +2,8 @@
 ## Scrum Master
 [William Harvey]
 ## Product Owner
-[Team Member 2]
+[Brody Ehorn]
 ## Developer
-- [Team Member 3]
-- [Team Member 4]
-- [Team Member 5]
+- [Abel Varghese]
+- [Trenity Gilford]
+- [Conner Hansen]
