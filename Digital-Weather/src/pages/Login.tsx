@@ -10,10 +10,22 @@ export default function Login() {
 
   const handleLogin = async () => {
     try {
-      await invoke("login", { username, password });
-      navigate("/dashboard");
+      if (!username.trim() || !password.trim()) {
+        setError("Username and password are required");
+        return;
+      }
+      const ok = await invoke("login", { username, password });
+      // If login resolves to true, go to dashboard. If the backend returned an error, invoke would throw.
+      if (ok === true) {
+        navigate("/dashboard");
+      } else {
+        // unexpected but show raw
+        setError(String(ok));
+      }
     } catch (e: any) {
-      setError(e);
+      // Tauri returns an error object with a message or a string
+      const msg = e?.message || e?.toString() || String(e);
+      setError(msg);
     }
   };
 

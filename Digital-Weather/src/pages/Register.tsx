@@ -10,10 +10,17 @@ export default function Register() {
 
   const handleRegister = async () => {
     try {
-      await invoke("register", { username, password });
-      navigate("/dashboard");  // Auto-login after registration
+      if (!username.trim() || !password.trim()) {
+        setError("Username and password are required");
+        return;
+      }
+
+      const res = await invoke("register", { username, password });
+      // Success - navigate to dashboard
+      navigate("/dashboard");
     } catch (e: any) {
-      setError(e);
+      const msg = e?.message || e?.toString() || String(e);
+      setError(msg);
     }
   };
 

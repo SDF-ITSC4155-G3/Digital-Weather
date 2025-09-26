@@ -61,6 +61,18 @@ fn init_db() -> Connection {
         [],
     ).unwrap();
 
+    // Notes attached to devices (basic CRUD)
+    conn.execute(
+        "CREATE TABLE IF NOT EXISTS notes (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            device_id INTEGER NOT NULL,
+            text TEXT NOT NULL,
+            created_at TEXT DEFAULT (datetime('now')),
+            FOREIGN KEY(device_id) REFERENCES devices(id)
+        )",
+        [],
+    ).unwrap();
+
     conn
 }
 
@@ -96,6 +108,59 @@ fn get_devices_geojson(conn: &Connection) -> FeatureCollection {
     }
 }
 
+// Note struct
+#[derive(Serialize)]
+struct Note {
+    id: i64,
+    device_id: i64,
+    text: String,
+    created_at: String,
+}
+
+#[tauri::command]
+fn add_note_cmd(app_state: tauri::State<AppState>, device_id: i64, text: String) -> Result<i64, String> {
+    let conn = app_state.conn.lock().unwrap();
+    conn.execute(
+        "INSERT INTO notes (device_id, text) VALUES (?1, ?2)",
+        params![device_id, text],
+    ).map_err(|e| format!("DB error: {}", e))?;
+    Ok(conn.last_insert_rowid())
+}
+
+#[tauri::command]
+fn get_notes_for_device(app_state: tauri::State<AppState>, device_id: i64) -> Result<Vec<Note>, String> {
+    let conn = app_state.conn.lock().unwrap();
+    let mut stmt = conn.prepare("SELECT id, device_id, text, created_at FROM notes WHERE device_id=?1 ORDER BY id DESC").map_err(|e| format!("DB error: {}", e))?;
+    let rows = stmt.query_map(params![device_id], |row| {
+        Ok(Note {
+            id: row.get(0)?,
+            device_id: row.get(1)?,
+            text: row.get(2)?,
+            created_at: row.get(3)?,
+        })
+    }).map_err(|e| format!("DB error: {}", e))?;
+    let notes: Vec<Note> = rows.map(|r| r.unwrap()).collect();
+    Ok(notes)
+}
+
+#[tauri::command]
+fn update_note_cmd(app_state: tauri::State<AppState>, note_id: i64, text: String) -> Result<bool, String> {
+    let conn = app_state.conn.lock().unwrap();
+    conn.execute(
+        "UPDATE notes SET text=?1 WHERE id=?2",
+        params![text, note_id],
+    ).map(|rows| rows > 0).map_err(|e| format!("DB error: {}", e))
+}
+
+#[tauri::command]
+fn delete_note_cmd(app_state: tauri::State<AppState>, note_id: i64) -> Result<bool, String> {
+    let conn = app_state.conn.lock().unwrap();
+    conn.execute(
+        "DELETE FROM notes WHERE id=?1",
+        params![note_id],
+    ).map(|rows| rows > 0).map_err(|e| format!("DB error: {}", e))
+}
+
 // Tauri commands
 
 #[tauri::command]
@@ -110,15 +175,19 @@ fn register(app_state: tauri::State<AppState>, username: String, password: Strin
 }
 
 #[tauri::command]
-fn login(app_state: tauri::State<AppState>, username: String, password: String) -> bool {
+fn login(app_state: tauri::State<AppState>, username: String, password: String) -> Result<bool, String> {
     let conn = app_state.conn.lock().unwrap();
-    let mut stmt = conn.prepare("SELECT password FROM users WHERE username=?1").unwrap();
-    let mut rows = stmt.query([username]).unwrap();
-    if let Some(row) = rows.next().unwrap() {
-        let stored: String = row.get(0).unwrap();
-        stored == password
+    let mut stmt = conn.prepare("SELECT password FROM users WHERE username=?1").map_err(|e| format!("DB error: {}", e))?;
+    let mut rows = stmt.query([username]).map_err(|e| format!("DB error: {}", e))?;
+    if let Some(row) = rows.next().map_err(|e| format!("DB error: {}", e))? {
+        let stored: String = row.get(0).map_err(|e| format!("DB error: {}", e))?;
+        if stored == password {
+            Ok(true)
+        } else {
+            Err("Invalid password".to_string())
+        }
     } else {
-        false
+        Err("User not found".to_string())
     }
 }
 
@@ -145,6 +214,10 @@ fn main() {
             login,
             add_device_cmd,
             get_devices_cmd
+            ,add_note_cmd
+            ,get_notes_for_device
+            ,update_note_cmd
+            ,delete_note_cmd
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
