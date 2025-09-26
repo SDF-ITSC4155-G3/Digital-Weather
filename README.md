@@ -7,3 +7,7 @@
 - [Abel Varghese]
 - [Trenity Gilford]
 - [Conner Hansen]
+
+To run the project download this file:
+
+digital-weather_0.1.0_x64_en-US.msi
