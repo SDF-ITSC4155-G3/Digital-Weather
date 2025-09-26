@@ -1,0 +1,15 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": { "id": 1, "name": "Router A" },
+      "geometry": { "type": "Point", "coordinates": [-74.0060, 40.7128] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": 2, "name": "Router B" },
+      "geometry": { "type": "Point", "coordinates": [-118.2437, 34.0522] }
+    }
+  ]
+}
