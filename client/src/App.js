@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 
 function App() {
 
-  const [data, setData] = useState([{}]);
+  const [data, setData] = useState({ hello_world: [] });
 
 useEffect(() => {
   // Prefer relative URL so the CRA dev server proxy (package.json) can forward to Flask.
@@ -28,17 +28,56 @@ useEffect(() => {
   tryFetch();
 }, []);
 
-  return (    
-  
-    <div>
+  return (
+    <div className="App">
+      <header className="site-header site-header--middle">
+        <h1 className="site-title">Digital Weather Map</h1>
+      </header>
+
+
+      {/* <div className="tileMap">
+        <div class="tile"></div>
+        <div class="tile"></div>
+        <div class="tile"></div>
+        <div class="tile"></div>
+      </div> */}
+
+      <div className="tileMap">
+        {data.hello_world && data.hello_world.length > 0 ? (
+          data.hello_world.map((value, i) => (
+            <div
+              key={i}
+              className="tile"
+              style={{ backgroundColor: Number(value) === 1 ? 'red' : 'lightgrey' }}
+            ></div>
+          ))
+        ) : (
+          // Show placeholder tiles while loading
+          <>
+            <div className="tile"></div>
+            <div className="tile"></div>
+            <div className="tile"></div>
+            <div className="tile"></div>
+          </>
+        )}
+      </div>
       
-      {(typeof data.hello_world === 'undefined') ? (
-        <p>Loading...</p>
-      ) : (
-        data.hello_world.map((word, i) => (
-          <p key={i}>{word}</p>
-        ))
-      )}
+      
+
+
+      
+
+
+
+      <main className="site-content">
+        {(typeof data.hello_world === 'undefined') ? (
+          <p>Loading...</p>
+        ) : (
+          data.hello_world.map((word, i) => (
+            <p key={i}>{word}</p>
+          ))
+        )}
+      </main>
     </div>
   )
 }

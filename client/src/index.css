@@ -6,9 +6,13 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  /*App background*/
-  background-color: #adcdec; 
+  /* App background */
+  background-color: #adcdec;
+}
 
+/* Ensure header doesn't contain leftover left padding from previous edits */
+.site-header {
+  justify-self: center;
 }
 
 
@@ -17,3 +21,22 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+.tileMap {
+  justify-self: center;
+  display: grid;
+  grid-template-columns: repeat(2, 50px);
+  grid-template-rows: repeat(2, 50px);
+}
+
+.tile{
+  width: 50px;
+  height: 50px;
+  background-color: lightgrey;
+  border: 1px solid black;
+  
+}
+
+
+
