@@ -28,6 +28,19 @@ useEffect(() => {
   tryFetch();
 }, []);
 
+
+  const getColor = (value) => {
+    const colors = [
+      '#d3d3d3', // 0 - light grey
+      '#ffff99', // 1 - light yellow
+      '#ffcc00', // 2 - yellow-orange
+      '#ff6600', // 3 - orange-red
+      '#ff0000', // 4 - red
+      '#800080', // 5 - purple
+    ];
+    return colors[Math.max(0, Math.min(5, Number(value)))];
+  };
+
   return (
     <div className="App">
       <header className="site-header site-header--middle">
@@ -35,12 +48,7 @@ useEffect(() => {
       </header>
 
 
-      {/* <div className="tileMap">
-        <div class="tile"></div>
-        <div class="tile"></div>
-        <div class="tile"></div>
-        <div class="tile"></div>
-      </div> */}
+      
 
       <div className="tileMap">
         {data.hello_world && data.hello_world.length > 0 ? (
@@ -48,7 +56,8 @@ useEffect(() => {
             <div
               key={i}
               className="tile"
-              style={{ backgroundColor: Number(value) === 1 ? 'red' : 'lightgrey' }}
+              style={{ 
+                backgroundColor: getColor(value)}}
             ></div>
           ))
         ) : (

@@ -4,10 +4,9 @@ app = Flask(__name__)
 
 
 # Hello World API route
-# Returns a JSON object with "Hello" and "World" in an array
 @app.route("/hello-world")
 def hello_world():
-    return {"hello_world": [1, 1, 0, 1]}
+    return {"hello_world": [0, 1, 3, 2]}
 
 
 # Add simple CORS headers so the frontend (dev server or browser) can fetch safely
