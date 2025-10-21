@@ -44,15 +44,15 @@ useEffect(() => {
   return (
     <div className="App">
       <header className="site-header site-header--middle">
-        <h1 className="site-title">Digital Weather Map</h1>
+        <h1 className="site-title">Digital Weather Map - UNC Charlotte</h1>
       </header>
 
       <div
         className="tileMap"
         style={{
           position: 'relative',          
-          width: '400px',                 // width of the map
-          height: '400px',                // height of the map
+          width: '700px',                 // width of the map
+          height: '700px',                // height of the map
           backgroundImage: 'url(/UNCCMap.jpg)', 
           backgroundSize: 'cover',
           backgroundPosition: 'center',
