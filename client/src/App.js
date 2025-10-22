@@ -3,6 +3,7 @@ import React, {useState, useEffect} from 'react'
 function App() {
 
   const [data, setData] = useState({ hello_world: [] });
+  const gridSize = 10;
 
 useEffect(() => {
   // Prefer relative URL so the CRA dev server proxy (package.json) can forward to Flask.
@@ -59,21 +60,45 @@ useEffect(() => {
         }}
       >
         {data.hello_world && data.hello_world.length > 0 ? (
-          data.hello_world.map((value, i) => (
-            <div
-              key={i}
-              className="tile"
-              style={{
-                backgroundColor: getColor(value),
-                width: '50%',  // 2x2 grid → each tile is half width
-                height: '50%', // 2x2 grid → each tile is half height
-                position: 'absolute',
-                top: `${Math.floor(i / 2) * 50}%`,  // row
-                left: `${(i % 2) * 50}%`,           // column
-                opacity: 0.5, // lets background image show through
-              }}
-            ></div>
-          ))
+          data.hello_world.map((value, i) => {
+            // <div
+            //   key={i}
+            //   className="tile"
+            //   style={{
+            //     backgroundColor: getColor(value),
+            //     width: '50%',  // 2x2 grid → each tile is half width
+            //     height: '50%', // 2x2 grid → each tile is half height
+            //     position: 'absolute',
+            //     top: `${Math.floor(i / 2) * 50}%`,  // row
+            //     left: `${(i % 2) * 50}%`,           // column
+            //     opacity: 0.5, // lets background image show through
+            //   }}
+            // ></div>
+            
+            
+            
+            const row = Math.floor(i / gridSize);
+            const col = i % gridSize;
+            return (
+              <div
+                key={i}
+                className="tile"
+                style={{
+                  backgroundColor: getColor(value),
+                  width: `${100 / gridSize}%`,
+                  height: `${100 / gridSize}%`,
+                  position: 'absolute',
+                  top: `${row * (100 / gridSize)}%`,
+                  left: `${col * (100 / gridSize)}%`,
+                  opacity: 0.5,
+                }}
+              ></div>
+            );
+
+
+
+          
+          })
         ) : null}
       </div>
 
