@@ -61,19 +61,7 @@ useEffect(() => {
       >
         {data.hello_world && data.hello_world.length > 0 ? (
           data.hello_world.map((value, i) => {
-            // <div
-            //   key={i}
-            //   className="tile"
-            //   style={{
-            //     backgroundColor: getColor(value),
-            //     width: '50%',  // 2x2 grid → each tile is half width
-            //     height: '50%', // 2x2 grid → each tile is half height
-            //     position: 'absolute',
-            //     top: `${Math.floor(i / 2) * 50}%`,  // row
-            //     left: `${(i % 2) * 50}%`,           // column
-            //     opacity: 0.5, // lets background image show through
-            //   }}
-            // ></div>
+            
             
             
             
