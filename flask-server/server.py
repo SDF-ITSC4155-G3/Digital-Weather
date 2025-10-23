@@ -15,7 +15,8 @@ def hello_world():
                             0, 0, 1, 3, 1, 3, 2, 3, 5, 0, 
                             0, 1, 2, 0, 0, 3, 4, 5, 2, 0, 
                             0, 1, 1, 2, 2, 2, 3, 1, 1, 0, 
-                            0, 0, 0, 0, 0, 0, 2, 3, 0, 0]}
+                            0, 0, 0, 0, 0, 0, 2, 3, 0, 0, 
+                           ]}
 
 
 # Add simple CORS headers so the frontend (dev server or browser) can fetch safely
