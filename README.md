@@ -12,7 +12,7 @@
 
 This project assumes that:
 - User has Python
-- User has installed Flask (run "pip install flask" in the project directory flask-server)
+- User has installed Flask (run "pip install flask" in the project's flask-server directory)
 - User has cloned the repository
 - User has node js installed
 - User will run project using google chrome
