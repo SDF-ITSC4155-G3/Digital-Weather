@@ -8,10 +8,26 @@
 - [Trenity Gilford]
 - [Conner Hansen]
 
-## To run the project download this file:
+# Build Instructions
 
-digital-weather_0.1.0_x64_en-US.msi
+This project assumes that:
+- User has Python
+- User has installed Flask (run "pip install flask" in the project directory flask-server)
+- User has cloned the repository
+- User will run project using google chrome
 
-## Current issue:
-Currently there is an error in re-running the program.                                                                  
-To re run it, it must be deleted and reinstalled through setup wizard(as if it were the first time it was installed)
+## Run Instructions
+
+In the project directory client, run:
+
+### 'npm install'
+
+In the project directory flask-server, run:
+
+### 'python server.py'
+
+In the project directory client, run:
+
+### 'npm start'
+
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
