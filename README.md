@@ -14,19 +14,20 @@ This project assumes that:
 - User has Python
 - User has installed Flask (run "pip install flask" in the project directory flask-server)
 - User has cloned the repository
+- User has node js installed
 - User will run project using google chrome
 
 ## Run Instructions
 
-In the project directory client, run:
+In the project's client directory, run:
 
 ### 'npm install'
 
-In the project directory flask-server, run:
+In the project's flask-server directory, run:
 
 ### 'python server.py'
 
-In the project directory client, run:
+In the client directory, run:
 
 ### 'npm start'
 
