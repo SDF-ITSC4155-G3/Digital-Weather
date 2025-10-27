@@ -26,8 +26,7 @@ code {
 .tileMap {
   justify-self: center;
   display: grid;
-  grid-template-columns: repeat(2, 50px);
-  grid-template-rows: repeat(2, 50px);
+  margin-bottom: 100px;
 }
 
 .tile{
@@ -36,6 +35,9 @@ code {
   background-color: lightgrey;
   border: 1px solid black;
   
+}
+
+.App{
 }
 
 

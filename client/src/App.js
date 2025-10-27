@@ -93,7 +93,7 @@ useEffect(() => {
 
 
 
-      <main className="site-content">
+      {/* <main className="site-content">
         {(typeof data.hello_world === 'undefined') ? (
           <p>Loading...</p>
         ) : (
@@ -101,7 +101,7 @@ useEffect(() => {
             <p key={i}>{word}</p>
           ))
         )}
-      </main>
+      </main> */}
     </div>
   )
 }
