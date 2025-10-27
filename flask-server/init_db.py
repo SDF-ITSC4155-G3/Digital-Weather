@@ -23,4 +23,4 @@ CREATE TABLE IF NOT EXISTS TileCount (
 conn.commit()
 conn.close()
 
-print("Database and table created successfully!")
+print("Database and tables created successfully!")
