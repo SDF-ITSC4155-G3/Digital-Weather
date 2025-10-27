@@ -27,6 +27,10 @@ useEffect(() => {
   };
 
   tryFetch();
+
+  const interval = setInterval(tryFetch, 5000); // Fetch every 5 seconds
+
+  return () => clearInterval(interval);
 }, []);
 
 
@@ -63,8 +67,6 @@ useEffect(() => {
           data.hello_world.map((value, i) => {
             
             
-            
-            
             const row = Math.floor(i / gridSize);
             const col = i % gridSize;
             return (
@@ -91,17 +93,6 @@ useEffect(() => {
       </div>
 
 
-
-
-      {/* <main className="site-content">
-        {(typeof data.hello_world === 'undefined') ? (
-          <p>Loading...</p>
-        ) : (
-          data.hello_world.map((word, i) => (
-            <p key={i}>{word}</p>
-          ))
-        )}
-      </main> */}
     </div>
   )
 }

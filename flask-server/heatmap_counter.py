@@ -9,10 +9,13 @@ def increment_tile_count(tile_id):
     if tile_id in tile_dict:
         tile_dict[tile_id] += 1
 
+
+
 def get_tile_counts():
-    return tile_dict
+    """Return a list of tile counts (length = GRID_SIZE * GRID_SIZE)"""
+    print("DEBUG: get_tile_counts() called. Current data:", tile_dict)  # 👈 for visibility
+    return list(tile_dict.values())
 
 def reset_tile_counts():
     for key in tile_dict:
         tile_dict[key] = 0
-
