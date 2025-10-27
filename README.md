@@ -31,4 +31,4 @@ In the client directory, run:
 
 ### 'npm start'
 
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser (This window should pop up automatically).
