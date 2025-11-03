@@ -28,7 +28,7 @@ useEffect(() => {
 
   tryFetch();
 
-  const interval = setInterval(tryFetch, 20000); //  Refresh every 20 seconds
+  const interval = setInterval(tryFetch, 5000); // Fetch every 5 seconds
 
   return () => clearInterval(interval);
 }, []);
