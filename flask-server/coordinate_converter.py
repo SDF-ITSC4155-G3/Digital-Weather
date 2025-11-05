@@ -1,16 +1,5 @@
 
 
-
-'''
-This file is not complete and logic is broken
-'''
-
-
-
-
-
-
-
 #Coordinate bounds for UNC Charlotte map in UNCCMap.jpg
 MIN_LATITUDE = 35.3030
 MAX_LATITUDE = 35.3120
@@ -28,13 +17,21 @@ def coords_to_tile(latitude, longitude):
     lat_range = MAX_LATITUDE - MIN_LATITUDE
     long_range = MAX_LONGITUDE - MIN_LONGITUDE
 
-    #Top-left will be (0,0), bottom-right will be (9,9)
-    lat_index = GRID_SIZE - int((latitude - MIN_LATITUDE) / lat_range * GRID_SIZE)
-    long_index = GRID_SIZE - int((longitude - MIN_LONGITUDE) / long_range * GRID_SIZE)
+    # Normalize coordinates to [0,1] range
+    lat_norm = (latitude - MIN_LATITUDE) / lat_range
+    long_norm = (longitude - MIN_LONGITUDE) / long_range
+
+    # Convert to grid indices
+    lat_index = int((1 - lat_norm) * GRID_SIZE)   # flip vertically so north is top
+    long_index = int(long_norm * GRID_SIZE)
 
     # Ensure indices are within grid bounds
     lat_index = min(max(lat_index, 0), GRID_SIZE - 1)
     long_index = min(max(long_index, 0), GRID_SIZE - 1)
+
+    # Convert 2D grid indices to 1D tile ID
+    # Ex: (0,1) in 10x10 grid -> tile ID 1, (2,3) -> tile ID 23
+    # Top left is (0,0) or tle_id 0, bottom right is (9,9) or tile_id 99
 
     tile_id = lat_index * GRID_SIZE + long_index
     return tile_id
