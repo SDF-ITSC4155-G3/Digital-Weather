@@ -2,7 +2,7 @@ from coordinate_converter import GRID_SIZE, coords_to_tile
 import sqlite3
 
 tile_dict = {}
-density_list = ()
+density_list = []
 DB_PATH = "locations.db"
 
 # When ran, initialize the tile dictionary with zero counts
@@ -47,12 +47,34 @@ def reset_tile_counts():
     for key in tile_dict:
         tile_dict[key] = 0
 
+# Convert counts to density levels for heatmap rendering
+# Returns a list of density levels corresponding to tile counts
+def counts_to_density():
+    density_list.clear()
+    for count in get_tile_counts():
+        if(count == 0):
+            density_list.append(0)
+        elif(count < 5):
+            density_list.append(1)
+        elif(count < 10):
+            density_list.append(2)
+        elif(count < 20):
+            density_list.append(3)
+        elif(count < 50):
+            density_list.append(4)
+        else:
+            density_list.append(5)
+    return density_list
+        
 
-# This must be updated 
+
+
+# Method designed to be called when sending data to frontend
+# Resets counts, updates them from the database, converts to density, and returns the density list
 def send_tile_counts():
     reset_tile_counts()
     update_all_tile_counts()
-    return get_tile_counts()
+    counts_to_density()
 
 
 
