@@ -74,7 +74,8 @@ def counts_to_density():
 def send_tile_counts():
     reset_tile_counts()
     update_all_tile_counts()
-    counts_to_density()
+    # Convert counts to density levels and return that list to the caller.
+    return counts_to_density()
 
 
 
