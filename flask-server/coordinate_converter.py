@@ -12,6 +12,7 @@ GRID_SIZE = 10  # Number of tiles along one axis (10x10 grid)
 #Convert coordinates to specific tile in heatmap
 def coords_to_tile(latitude, longitude):
     if not (MIN_LATITUDE <= latitude <= MAX_LATITUDE) or not (MIN_LONGITUDE <= longitude <= MAX_LONGITUDE):
+        print("Coordinates out of bounds:", latitude, longitude)
         return None  # Coordinates out of bounds
 
     lat_range = MAX_LATITUDE - MIN_LATITUDE
