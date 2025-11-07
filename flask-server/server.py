@@ -1,7 +1,21 @@
 from flask import Flask
 from heatmap_counter import get_tile_counts, reset_tile_counts
+from flask_sqlalchemy import SQLAlchemy
+from extensions import db
+from models import User
+from auth import auth_bp
+from flask_cors import CORS
 
 app = Flask(__name__)
+
+CORS(app)
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+db = SQLAlchemy(app)
+
+app.register_blueprint(auth_bp)
 
 
 # Hello World API route
@@ -39,4 +53,7 @@ def add_cors_headers(response):
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    with app.app_context():
+        db.create_all()
+        app.run(debug=True)
+    
