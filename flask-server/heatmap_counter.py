@@ -1,9 +1,13 @@
 from coordinate_converter import GRID_SIZE, coords_to_tile
 import sqlite3
+import os
+
+# canonical DB path (flask-server/locations.db)
+THIS_DIR = os.path.dirname(__file__)
+DB_PATH = os.path.join(THIS_DIR, "locations.db")
 
 tile_dict = {}
 density_list = []
-DB_PATH = "locations.db"
 
 # When ran, initialize the tile dictionary with zero counts
 for i in range(GRID_SIZE * GRID_SIZE):
@@ -25,7 +29,7 @@ def get_tile_counts():
 
 # Method runs increment_tile_count for each entry in the database
 def update_all_tile_counts():
-    conn = sqlite3.connect("locations.db")
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
     # Grab all sets of coordinates from the database
     cursor.execute("""

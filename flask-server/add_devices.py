@@ -1,6 +1,8 @@
 import sqlite3
+import os
 
-DB_PATH = "locations.db"
+THIS_DIR = os.path.dirname(__file__)
+DB_PATH = os.path.join(THIS_DIR, "locations.db")
 
 def add_location(latitude, longitude):
     conn = sqlite3.connect(DB_PATH)

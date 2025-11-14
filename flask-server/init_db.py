@@ -1,7 +1,12 @@
 import sqlite3
+import os
+
+# Use DB file next to this script so different CWDs don't create duplicates
+THIS_DIR = os.path.dirname(__file__)
+DB_PATH = os.path.join(THIS_DIR, "locations.db")
 
 # Connect to (or create) the database
-conn = sqlite3.connect("locations.db")
+conn = sqlite3.connect(DB_PATH)
 cursor = conn.cursor()
 
 # Create a table for user locations
