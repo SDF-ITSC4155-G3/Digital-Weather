@@ -14,8 +14,11 @@ This project assumes that:
 - User has Python
 - User has installed Flask (run "pip install flask" in the project's flask-server directory)
 - User has cloned the repository
-- User has node js installed
+- User has node js installed (to check, run "node -v")
 - User will run project using google chrome
+
+# Clone Instructions
+To clone in github, hit the "code" button, and underneath there will be a section labled "clone". copy the web URL provided there, and in VSCode run "git clone url" replacing URL with the actual URL.
 
 ## Run Instructions
 
