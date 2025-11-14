@@ -33,7 +33,8 @@ code {
   width: 50px;
   height: 50px;
   background-color: lightgrey;
-  border: 1px solid black;
+  /* softened border for less visual contrast */
+  /* border: 1px solid rgba(0,0,0,0.18);  */
   
 }
 

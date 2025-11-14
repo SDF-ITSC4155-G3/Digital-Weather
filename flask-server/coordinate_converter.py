@@ -7,7 +7,7 @@ MAX_LATITUDE = 35.3120
 MIN_LONGITUDE = -80.7365
 MAX_LONGITUDE = -80.7275
 
-GRID_SIZE = 25  # Number of tiles along one axis (10x10 grid)
+GRID_SIZE = 100  # Number of tiles along one axis (10x10 grid)
 
 #Convert coordinates to specific tile in heatmap
 def coords_to_tile(latitude, longitude):

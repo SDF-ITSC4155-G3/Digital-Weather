@@ -3,7 +3,7 @@ import React, {useState, useEffect} from 'react'
 function App() {
 
   const [data, setData] = useState({ hello_world: [] });
-  const gridSize = 25;
+  const gridSize = 100;
 
 useEffect(() => {
   // Prefer relative URL so the CRA dev server proxy (package.json) can forward to Flask.
