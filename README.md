@@ -19,7 +19,7 @@ This project assumes that:
 
 ## Run Instructions
 
-In VSCode, create two seperate terminals. One will be in the client directory, the other will be in the flask-server directory.
+In VSCode, create two seperate terminals. In one, navigate to the client directory, in the other, navigate to the flask-server directory.
 
 In the project's client directory, run:
 
