@@ -1,11 +1,14 @@
 
 
 #Coordinate bounds for UNC Charlotte map in UNCCMap.jpg
-MIN_LATITUDE = 35.3030
+MIN_LATITUDE = 35.3033
 MAX_LATITUDE = 35.3120
 
-MIN_LONGITUDE = -80.7365
-MAX_LONGITUDE = -80.7275
+# MIN_LATITUDE = 35.3030
+# MAX_LATITUDE = 35.3120
+
+MIN_LONGITUDE = -80.7381
+MAX_LONGITUDE = -80.7272
 
 GRID_SIZE = 100  # Number of tiles along one axis (10x10 grid)
 
