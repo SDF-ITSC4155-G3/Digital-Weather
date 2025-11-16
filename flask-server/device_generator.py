@@ -22,28 +22,28 @@ MAX_LONGITUDE = -80.7275
 
 # --- Building clusters (approximate centers) ---
 clusters = [
-    {"name": "Atkins Library", "center": (35.30579, -80.73212), "radius": 0.00020, "weight": 0.12},                 
-    {"name": "Popp Martin Student Union", "center": (35.30865, -80.73369), "radius": 0.00020, "weight": 0.10},  
-    {"name": "Woodward Hall", "center": (35.30736, -80.73558), "radius": 0.00018, "weight": 0.08},
-    {"name": "Barnhardt SAC", "center": (35.30635, -80.73443), "radius": 0.00020, "weight": 0.08},
-    {"name": "Belk Gym", "center": (35.30539, -80.73561), "radius": 0.00018, "weight": 0.07},
-    {"name": "Fretwell", "center": (35.30606, -80.72910), "radius": 0.00018, "weight": 0.07},
-    {"name": "Kennedy", "center": (35.30597, -80.73093), "radius": 0.00015, "weight": 0.06},
-    {"name": "McEniry", "center": (35.30717, -80.73020), "radius": 0.00015, "weight": 0.06},
-    {"name": "Robinson Hall", "center": (35.30384, -80.72989), "radius": 0.00020, "weight": 0.05},
-    {"name": "Belk Hall (Dorm)", "center": (35.31036, -80.73504), "radius": 0.00015, "weight": 0.05},
-    {"name": "Wallis Hall", "center": (35.31131, -80.73381), "radius": 0.00015, "weight": 0.04},
-    {"name": "Cameron Hall", "center": (35.30764, -80.73117), "radius": 0.00015, "weight": 0.05},
-    {"name": "Smith Hall", "center": (35.30683, -80.73154), "radius": 0.00015, "weight": 0.04},
-    {"name": "Denny Hall", "center": (35.30541, -80.72983), "radius": 0.00015, "weight": 0.04},
-    {"name": "Garinger Hall", "center": (35.30499, -80.73021), "radius": 0.00015, "weight": 0.04},
-    {"name": "Rowe Hall", "center": (35.30442, -80.73076), "radius": 0.00015, "weight": 0.03},
-    {"name": "Storrs Hall", "center": (35.30460, -80.72914), "radius": 0.00015, "weight": 0.03},
-    {"name": "Macy Hall", "center": (35.30577, -80.73025), "radius": 0.00014, "weight": 0.03},
-    {"name": "Friday Hall", "center": (35.30629, -80.72998), "radius": 0.00014, "weight": 0.03},
-    {"name": "King", "center": (35.30506, -80.73257), "radius": 0.00010, "weight": 0.02},
-    {"name": "Reece", "center": (35.30464, -80.73257), "radius": 0.00010, "weight": 0.02},
-    {"name": "Oak/Elm/Maple/Pine Dorms", "center": (35.30903, -80.73159), "radius": 0.00020, "weight": 0.05}
+    {"name": "Atkins Library", "center": (35.30579, -80.73212), "radius": 0.00040, "weight": 0.20},                 
+    {"name": "Popp Martin Student Union", "center": (35.30865, -80.73369), "radius": 0.00040, "weight": 0.20},  
+    {"name": "Woodward Hall", "center": (35.30736, -80.73558), "radius": 0.00040, "weight": 0.08},
+    {"name": "Barnhardt SAC", "center": (35.30635, -80.73443), "radius": 0.00050, "weight": 0.08},
+    {"name": "Belk Gym", "center": (35.30539, -80.73561), "radius": 0.00040, "weight": 0.07},
+    {"name": "Fretwell", "center": (35.30606, -80.72910), "radius": 0.00030, "weight": 0.07},
+    {"name": "Kennedy", "center": (35.30597, -80.73093), "radius": 0.00018, "weight": 0.04},
+    {"name": "McEniry", "center": (35.30717, -80.73020), "radius": 0.00025, "weight": 0.06},
+    {"name": "Robinson Hall", "center": (35.30384, -80.72989), "radius": 0.00035, "weight": 0.05},
+    {"name": "Belk Hall (Dorm)", "center": (35.31036, -80.73504), "radius": 0.00040, "weight": 0.05},
+    {"name": "Wallis Hall", "center": (35.31131, -80.73381), "radius": 0.00040, "weight": 0.04},
+    {"name": "Cameron Hall", "center": (35.30764, -80.73117), "radius": 0.00030, "weight": 0.05},
+    {"name": "Smith Hall", "center": (35.30683, -80.73154), "radius": 0.00025, "weight": 0.04},
+    {"name": "Denny Hall", "center": (35.30541, -80.72983), "radius": 0.00020, "weight": 0.04},
+    {"name": "Garinger Hall", "center": (35.30499, -80.73021), "radius": 0.00020, "weight": 0.03},
+    {"name": "Rowe Hall", "center": (35.30442, -80.73076), "radius": 0.00030, "weight": 0.03},
+    {"name": "Storrs Hall", "center": (35.30460, -80.72914), "radius": 0.00030, "weight": 0.03},
+    {"name": "Macy Hall", "center": (35.30577, -80.73025), "radius": 0.00020, "weight": 0.03},
+    {"name": "Friday Hall", "center": (35.30629, -80.72998), "radius": 0.00025, "weight": 0.03},
+    {"name": "King", "center": (35.30506, -80.73257), "radius": 0.00015, "weight": 0.02},
+    {"name": "Reece", "center": (35.30464, -80.73257), "radius": 0.00015, "weight": 0.02},
+    {"name": "Oak/Elm/Maple/Pine Dorms", "center": (35.30903, -80.73159), "radius": 0.00050, "weight": 0.05}
 ]
 
 # --- clamp helper ---
@@ -182,6 +182,6 @@ def clear_database(db_path=DEFAULT_DB):
 # --- Main ---
 if __name__ == "__main__":
 
-    # clear_database()  # Clear existing data
-    devices = generate_clustered_devices(clusters, total_devices=1000)
+    clear_database()  # Clear existing data
+    devices = generate_clustered_devices(clusters, total_devices=2000)
     insert_devices_into_db(devices)
