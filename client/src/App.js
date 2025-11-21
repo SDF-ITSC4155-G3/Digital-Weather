@@ -48,6 +48,9 @@ useEffect(() => {
 
   return (
     <div className="App">
+      <head>
+        <link rel="icon" href="%PUBLIC_URL%/UNCCMap.jpg" />
+      </head>
       <header className="site-header site-header--middle">
         <h1 className="site-title">Digital Weather Map - UNC Charlotte</h1>
       </header>

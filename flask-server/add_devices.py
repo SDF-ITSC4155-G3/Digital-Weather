@@ -35,11 +35,7 @@ print(get_all_locations())
 
 
 
-# MIN_LATITUDE = 35.3030
-# MAX_LATITUDE = 35.3120
 
-# MIN_LONGITUDE = -80.7365
-# MAX_LONGITUDE = -80.7275
 
 # add_location(35.3030, -80.7365)  BOTTOM-LEFT
 

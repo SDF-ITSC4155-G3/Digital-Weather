@@ -178,10 +178,30 @@ def clear_database(db_path=DEFAULT_DB):
     print(f"[OK] Cleared DB. rows before={before}, rows after={after} (path={abs_path})")
 
 
+def generate_uniform_devices(count):
+    
+    # Generate devices uniformly random across the entire campus bounds.
+    devices = []
+    for _ in range(count):
+        lat = random.uniform(MIN_LATITUDE, MAX_LATITUDE)
+        lon = random.uniform(MIN_LONGITUDE, MAX_LONGITUDE)
+        devices.append((lat, lon))
+    return devices
+
+
+def generate_devices(clusters, clustered_deivces_count, random_devices_count):
+    clustered = generate_clustered_devices(clusters, clustered_deivces_count)
+    random = generate_uniform_devices(random_devices_count)
+
+    return clustered + random
+
+
 
 # --- Main ---
 if __name__ == "__main__":
 
     clear_database()  # Clear existing data
+
     devices = generate_clustered_devices(clusters, total_devices=2000)
+    # devices = generate_devices(clusters, 2000, 500)
     insert_devices_into_db(devices)
