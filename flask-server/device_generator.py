@@ -43,7 +43,27 @@ clusters = [
     {"name": "Friday Hall", "center": (35.30629, -80.72998), "radius": 0.00025, "weight": 0.03},
     {"name": "King", "center": (35.30506, -80.73257), "radius": 0.00015, "weight": 0.02},
     {"name": "Reece", "center": (35.30464, -80.73257), "radius": 0.00015, "weight": 0.02},
-    {"name": "Oak/Elm/Maple/Pine Dorms", "center": (35.30903, -80.73159), "radius": 0.00050, "weight": 0.05}
+    {"name": "Oak/Elm/Maple/Pine Dorms", "center": (35.30903, -80.73159), "radius": 0.00050, "weight": 0.05},
+    {"name": "Miltimore Hall", "center": (35.31128, -80.73505), "radius": 0.00050, "weight": 0.05},
+    {"name": "Lynch Hall", "center": (35.31040, -80.73373), "radius": 0.00050, "weight": 0.05},
+    {"name": "Witherspoon", "center": (35.31091, -80.73224), "radius": 0.00060, "weight": 0.05},
+    {"name": "Cedar", "center": (35.30958, -80.72896), "radius": 0.00015, "weight": 0.02},
+    {"name": "Hickory", "center": (35.30919, -80.72901), "radius": 0.00015, "weight": 0.02},
+    {"name": "Sycamore", "center": (35.30883, -80.72901), "radius": 0.00015, "weight": 0.02},
+    {"name": "Burson", "center": (35.30747, -80.73237), "radius": 0.00050, "weight": 0.05},
+    {"name": "Colvard", "center": (35.30479, -80.73177), "radius": 0.00050, "weight": 0.05},
+    {"name": "Cato Hall", "center": (35.30546, -80.72872), "radius": 0.00020, "weight": 0.03},
+    {"name": "Cato College", "center": (35.30752, -80.73406), "radius": 0.00030, "weight": 0.03},
+    {"name": "CHHS", "center": (35.30739, -80.73335), "radius": 0.00050, "weight": 0.05},
+    {"name": "Cone", "center": (35.30538, -80.73317), "radius": 0.00040, "weight": 0.05},
+    {"name": "KcKnight Hall", "center": (35.30483, -80.73330), "radius": 0.00025, "weight": 0.03},
+    {"name": "Track Facility", "center": (35.30589, -80.73728), "radius": 0.00010, "weight": 0.01},
+    {"name": "Tennis Facility", "center": (35.30733, -80.73676), "radius": 0.00005, "weight": 0.005},
+    {"name": "Memorial Hall", "center": (35.30379, -80.73585), "radius": 0.000510, "weight": 0.02},
+    {"name": "Martin Hall", "center": (35.31005, -80.72755), "radius": 0.00050, "weight": 0.05}
+
+    
+
 ]
 
 # --- clamp helper ---
