@@ -13,7 +13,8 @@ CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-db = SQLAlchemy(app)
+# db = SQLAlchemy(app)
+db.init_app(app)
 
 app.register_blueprint(auth_bp)
 
@@ -56,4 +57,3 @@ if __name__ == "__main__":
     with app.app_context():
         db.create_all()
         app.run(debug=True)
-    
