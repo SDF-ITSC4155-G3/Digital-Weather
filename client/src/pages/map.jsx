@@ -1,9 +1,10 @@
 import React, {useState, useEffect} from 'react';
+import { getAuthHeaders } from '../utils/auth.js';
 
 function Map() {
 
   const [data, setData] = useState({ hello_world: [] });
-  const gridSize = 10;
+  const gridSize = 100;
 
 useEffect(() => {
   // Prefer relative URL so the CRA dev server proxy (package.json) can forward to Flask.
@@ -13,7 +14,9 @@ useEffect(() => {
   const tryFetch = async () => {
     for (const url of urls) {
       try {
-        const res = await fetch(url);
+        const res = await fetch(url, {
+          headers: getAuthHeaders()
+        });
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const json = await res.json();
         setData(json);

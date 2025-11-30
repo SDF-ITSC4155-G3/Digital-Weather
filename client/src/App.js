@@ -1,95 +1,62 @@
 import React, {useState, useEffect} from 'react'
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from "react-router-dom";
 import About from "./pages/about.jsx";
 import Contact from "./pages/contact.jsx";
 import Map from "./pages/map.jsx";
 import RegisterPage from "./pages/register.jsx";
 import LoginPage from "./pages/login.jsx";
+import ProtectedRoute from "./components/ProtectedRoute.jsx";
+import { isLoggedIn, removeToken } from "./utils/auth.js";
 
+function AppContent() {
+  const [loggedIn, setLoggedIn] = useState(false);
+  const navigate = useNavigate();
 
-function App() {
+  useEffect(() => {
+    setLoggedIn(isLoggedIn());
+  }, []);
 
-<<<<<<< HEAD
-  const [data, setData] = useState({ hello_world: [] });
-  const gridSize = 100;
-
-useEffect(() => {
-  // Prefer relative URL so the CRA dev server proxy (package.json) can forward to Flask.
-  // If that fails, try the absolute backend URL to aid debugging.
-  const urls = ["/hello-world", "http://127.0.0.1:5000/hello-world"];
-
-  const tryFetch = async () => {
-    for (const url of urls) {
-      try {
-        const res = await fetch(url);
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const json = await res.json();
-        setData(json);
-        console.log("fetched from", url, json);
-        return;
-      } catch (err) {
-        console.warn(`fetch failed for ${url}:`, err.message || err);
-      }
-    }
-    console.error("All fetch attempts failed");
+  const handleLogout = () => {
+    removeToken();
+    setLoggedIn(false);
+    navigate("/login");
   };
 
-  tryFetch();
-
-  const interval = setInterval(tryFetch, 5000); // Fetch every 5 seconds
-
-  return () => clearInterval(interval);
-}, []);
-
-
-  const getColor = (value) => {
-    const colors = [
-      '#d3d3d3', // 0 - light grey
-      '#ffff99', // 1 - light yellow
-      '#ffcc00', // 2 - yellow-orange
-      '#ff6600', // 3 - orange-red
-      '#ff0000', // 4 - red
-      '#800080', // 5 - purple
-    ];
-    return colors[Math.max(0, Math.min(5, Number(value)))];
-  };
-
-  return (
-    <div className="App">
-      <head>
-        <link rel="icon" href="%PUBLIC_URL%/UNCCMap.jpg" />
-      </head>
-      <header className="site-header site-header--middle">
-        <h1 className="site-title">Digital Weather Map - UNC Charlotte</h1>
-      </header>
-=======
   return (
     <div>
-    <Router>
->>>>>>> abel2
-
       <nav>
-       
         <Link to="/about">About</Link> |{" "}
         <Link to="/contact">Contact</Link> |{" "}
         <Link to ="/map">Map</Link> |{" "}
-        <Link to="/register">Register</Link> |{" "} 
-        <Link to="/login">Login</Link>
+        {!loggedIn ? (
+          <Link to="/login">Login</Link>
+        ) : (
+          <button onClick={handleLogout} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'blue', textDecoration: 'underline' }}>
+            Logout
+          </button>
+        )}
       </nav>
       <Routes>
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage onRegisterSuccess={() => setLoggedIn(true)} />} />
+        <Route path="/login" element={<LoginPage onLoginSuccess={() => setLoggedIn(true)} />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/map" element={<Map />} />
+        <Route path="/map" element={
+          <ProtectedRoute>
+            <Map />
+          </ProtectedRoute>
+        } />
       </Routes>
-    
-    
-
-
-    </Router>
     </div>
-  )
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <AppContent />
+    </Router>
+  );
 }
 
 export default App

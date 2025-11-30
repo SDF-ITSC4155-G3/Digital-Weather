@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
-export default function Login() {
+export default function Login({ onLoginSuccess }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
@@ -10,12 +10,13 @@ export default function Login() {
 
   useEffect(() => {
     if (isLoggedIn) {
+      onLoginSuccess && onLoginSuccess();
       const timer = setTimeout(() => {
         navigate("/map");
       }, 2000); // Redirect after 2 seconds to show the message
       return () => clearTimeout(timer);
     }
-  }, [isLoggedIn, navigate]);
+  }, [isLoggedIn, navigate, onLoginSuccess]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,7 +28,9 @@ export default function Login() {
       });
       const data = await res.json();
       
-      if (res.ok) {
+      if (res.ok && data.token) {
+        // Store token in localStorage
+        localStorage.setItem('authToken', data.token);
         setMessage("You are logged in! Redirecting to map...");
         setIsLoggedIn(true);
       } else {
@@ -56,6 +59,9 @@ export default function Login() {
         <button type="submit">Login</button>
       </form>
       <p>{message}</p>
+      <p>
+        Don't have an account? <Link to="/register">Register here</Link>
+      </p>
     </div>
   );
 }
