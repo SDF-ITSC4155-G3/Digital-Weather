@@ -1,17 +1,9 @@
-import React, {useState, useEffect} from 'react'
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import About from "./pages/about.jsx";
-import Contact from "./pages/contact.jsx";
-import Map from "./pages/map.jsx";
-import RegisterPage from "./pages/register.jsx";
-import LoginPage from "./pages/login.jsx";
+import React, {useState, useEffect} from 'react';
 
+function Map() {
 
-function App() {
-
-<<<<<<< HEAD
   const [data, setData] = useState({ hello_world: [] });
-  const gridSize = 100;
+  const gridSize = 10;
 
 useEffect(() => {
   // Prefer relative URL so the CRA dev server proxy (package.json) can forward to Flask.
@@ -55,41 +47,59 @@ useEffect(() => {
   };
 
   return (
-    <div className="App">
-      <head>
-        <link rel="icon" href="%PUBLIC_URL%/UNCCMap.jpg" />
-      </head>
+    
+    
+    <div className="Map">
       <header className="site-header site-header--middle">
         <h1 className="site-title">Digital Weather Map - UNC Charlotte</h1>
       </header>
-=======
-  return (
-    <div>
-    <Router>
->>>>>>> abel2
 
-      <nav>
-       
-        <Link to="/about">About</Link> |{" "}
-        <Link to="/contact">Contact</Link> |{" "}
-        <Link to ="/map">Map</Link> |{" "}
-        <Link to="/register">Register</Link> |{" "} 
-        <Link to="/login">Login</Link>
-      </nav>
-      <Routes>
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/map" element={<Map />} />
-      </Routes>
-    
-    
+      <div
+        className="tileMap"
+        style={{
+          position: 'relative',          
+          width: '700px',                 // width of the map
+          height: '700px',                // height of the map
+          backgroundImage: 'url(/UNCCMap.jpg)', 
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      >
+        {data.hello_world && data.hello_world.length > 0 ? (
+          data.hello_world.map((value, i) => {
+            
+            
+            const row = Math.floor(i / gridSize);
+            const col = i % gridSize;
+            return (
+              <div
+                key={i}
+                className="tile"
+                style={{
+                  backgroundColor: getColor(value),
+                  width: `${100 / gridSize}%`,
+                  height: `${100 / gridSize}%`,
+                  position: 'absolute',
+                  top: `${row * (100 / gridSize)}%`,
+                  left: `${col * (100 / gridSize)}%`,
+                  opacity: 0.5,
+                }}
+              ></div>
+            );
 
 
-    </Router>
+
+          
+          })
+        ) : null}
+      </div>
+
+
     </div>
+
+
+
   )
 }
 
-export default App
+export default Map
