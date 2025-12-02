@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "./Register.css";
 
 export default function Register({ onRegisterSuccess }) {
   const [username, setUsername] = useState("");
@@ -33,23 +34,30 @@ export default function Register({ onRegisterSuccess }) {
   
 
   return (
-    <div>
-      <h2>Register</h2>
-      <form onSubmit={handleSubmit}>
+    <div className="page page-card auth-page">
+      <h2 className="page-title">Create an account</h2>
+      <p className="page-subtitle">
+        Register once to securely access the campus weather map.
+      </p>
+      <form className="auth-form" onSubmit={handleSubmit}>
         <input
+          className="auth-input"
           placeholder="Username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
         <input
+          className="auth-input"
           placeholder="Password"
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button type="submit">Register</button>
+        <button className="auth-button" type="submit">
+          Register
+        </button>
       </form>
-      <p>{message}</p>
+      <p className="auth-message">{message}</p>
     </div>
   );
 }

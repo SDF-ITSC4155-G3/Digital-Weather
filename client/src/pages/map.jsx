@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { getAuthHeaders } from '../utils/auth.js';
+import "./Map.css";
 
 function Map() {
 
@@ -50,59 +51,72 @@ useEffect(() => {
   };
 
   return (
-    
-    
-    <div className="Map">
+    <div className="page map-page">
       <header className="site-header site-header--middle">
         <h1 className="site-title">Digital Weather Map - UNC Charlotte</h1>
+        <p className="site-subtitle">
+          Live visualization of grid-based weather data over campus.
+        </p>
       </header>
 
-      <div
-        className="tileMap"
-        style={{
-          position: 'relative',          
-          width: '700px',                 // width of the map
-          height: '700px',                // height of the map
-          backgroundImage: 'url(/UNCCMap.jpg)', 
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
-      >
-        {data.hello_world && data.hello_world.length > 0 ? (
-          data.hello_world.map((value, i) => {
-            
-            
-            const row = Math.floor(i / gridSize);
-            const col = i % gridSize;
-            return (
-              <div
-                key={i}
-                className="tile"
-                style={{
-                  backgroundColor: getColor(value),
-                  width: `${100 / gridSize}%`,
-                  height: `${100 / gridSize}%`,
-                  position: 'absolute',
-                  top: `${row * (100 / gridSize)}%`,
-                  left: `${col * (100 / gridSize)}%`,
-                  opacity: 0.5,
-                }}
-              ></div>
-            );
+      <div className="map-card page-card">
+        <div
+          className="tileMap"
+          style={{
+            position: "relative",
+            backgroundImage: "url(/UNCCMap.jpg)",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        >
+          {data.hello_world && data.hello_world.length > 0
+            ? data.hello_world.map((value, i) => {
+                const row = Math.floor(i / gridSize);
+                const col = i % gridSize;
+                return (
+                  <div
+                    key={i}
+                    className="tile"
+                    style={{
+                      backgroundColor: getColor(value),
+                      top: `${row * (100 / gridSize)}%`,
+                      left: `${col * (100 / gridSize)}%`,
+                    }}
+                  />
+                );
+              })
+            : null}
+        </div>
 
-
-
-          
-          })
-        ) : null}
+        {/* NEW: legend */}
+        <div className="map-legend">
+          <span className="legend-title">User density</span>
+          <div className="legend-rows">
+            <div className="legend-row">
+              <span className="legend-swatch legend-swatch--1" />
+              <span className="legend-text">Very low</span>
+            </div>
+            <div className="legend-row">
+              <span className="legend-swatch legend-swatch--2" />
+              <span className="legend-text">Low</span>
+            </div>
+            <div className="legend-row">
+              <span className="legend-swatch legend-swatch--3" />
+              <span className="legend-text">Medium</span>
+            </div>
+            <div className="legend-row">
+              <span className="legend-swatch legend-swatch--4" />
+              <span className="legend-text">High</span>
+            </div>
+            <div className="legend-row">
+              <span className="legend-swatch legend-swatch--5" />
+              <span className="legend-text">Very high</span>
+            </div>
+          </div>
+        </div>
       </div>
-
-
     </div>
-
-
-
-  )
+  );
 }
 
 export default Map

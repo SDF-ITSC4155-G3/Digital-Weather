@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import "./Login.css";
 
 export default function Login({ onLoginSuccess }) {
   const [username, setUsername] = useState("");
@@ -42,25 +43,35 @@ export default function Login({ onLoginSuccess }) {
   };
 
   return (
-    <div>
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
+    <div className="page page-card auth-page">
+      <h2 className="page-title">Login</h2>
+      <p className="page-subtitle">
+        Sign in to access the UNC Charlotte digital weather map.
+      </p>
+      <form className="auth-form" onSubmit={handleSubmit}>
         <input
+          className="auth-input"
           placeholder="Username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
         <input
+          className="auth-input"
           placeholder="Password"
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button type="submit">Login</button>
+        <button className="auth-button" type="submit">
+          Login
+        </button>
       </form>
-      <p>{message}</p>
-      <p>
-        Don't have an account? <Link to="/register">Register here</Link>
+      <p className="auth-message">{message}</p>
+      <p className="auth-subtext">
+        Don&apos;t have an account?{" "}
+        <Link className="auth-link" to="/register">
+          Register here
+        </Link>
       </p>
     </div>
   );

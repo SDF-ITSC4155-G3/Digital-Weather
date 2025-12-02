@@ -1,32 +1,59 @@
 import React, {useState} from 'react'
+import "./Contact.css";
 function Contact(){
-    return(
-        <div>
-            <h1>Contact Us</h1>
-            <div>
-            <p>
-                Contact Information:
-            </p>
-            <ul>
-                <li>
-                    <strong>William Harvey</strong> (Scrum Master) - <a href="mailto:wharvey@uncc.edu">wharvey@uncc.edu</a>
-                </li>
-                <li>
-                    <strong>Brody Ehorn</strong> (Product Owner) - <a href="mailto:behorn@uncc.edu">behorn@uncc.edu</a>
-                </li>
-                <li>
-                    <strong>Abel Varghese</strong> (Developer) - <a href="mailto:avarghes@uncc.edu">avarghes@uncc.edu</a>
-                </li>
-                <li>
-                    <strong>Trenity Gilford</strong> (Developer) - <a href="mailto:tgilford@uncc.edu">tgilford@uncc.edu</a>
-                </li>
-                <li>
-                    <strong>Conner Hansen</strong> (Developer) - <a href="mailto:chansen28@uncc.edu">chansen28@uncc.edu</a>
-                </li>
-            </ul>   
-            </div>
+    return (
+        <div className="page page-card contact-page">
+        <h1 className="page-title">Contact Us</h1>
+        <p className="page-subtitle">
+            Reach out to the team behind the Digital Weather Map.
+        </p>
+
+        <section className="contact-section">
+            <p className="contact-label">Contact Information</p>
+
+            <ul className="contact-list">
+            <li>
+                <span className="contact-name">William Harvey</span>
+                <span className="contact-role">Scrum Master</span>
+                <a href="mailto:wharvey@uncc.edu" className="contact-email">
+                wharvey@uncc.edu
+                </a>
+            </li>
+
+            <li>
+                <span className="contact-name">Brody Ehorn</span>
+                <span className="contact-role">Product Owner</span>
+                <a href="mailto:behorn@uncc.edu" className="contact-email">
+                behorn@uncc.edu
+                </a>
+            </li>
+
+            <li>
+                <span className="contact-name">Abel Varghese</span>
+                <span className="contact-role">Developer</span>
+                <a href="mailto:avarghes@uncc.edu" className="contact-email">
+                avarghes@uncc.edu
+                </a>
+            </li>
+
+            <li>
+                <span className="contact-name">Trenity Gilford</span>
+                <span className="contact-role">Developer</span>
+                <a href="mailto:tgilford@uncc.edu" className="contact-email">
+                tgilford@uncc.edu
+                </a>
+            </li>
+
+            <li>
+                <span className="contact-name">Conner Hansen</span>
+                <span className="contact-role">Developer</span>
+                <a href="mailto:chansen28@uncc.edu" className="contact-email">
+                chansen28@uncc.edu
+                </a>
+            </li>
+            </ul>
+        </section>
         </div>
-        
-    )
+    );
 }
 export default Contact

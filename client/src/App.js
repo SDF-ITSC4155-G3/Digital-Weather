@@ -7,6 +7,7 @@ import RegisterPage from "./pages/register.jsx";
 import LoginPage from "./pages/login.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import { isLoggedIn, removeToken } from "./utils/auth.js";
+import "./App.css";
 
 function AppContent() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -23,30 +24,51 @@ function AppContent() {
   };
 
   return (
-    <div>
-      <nav>
-        <Link to="/about">About</Link> |{" "}
-        <Link to="/contact">Contact</Link> |{" "}
-        <Link to ="/map">Map</Link> |{" "}
-        {!loggedIn ? (
-          <Link to="/login">Login</Link>
-        ) : (
-          <button onClick={handleLogout} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'blue', textDecoration: 'underline' }}>
-            Logout
-          </button>
-        )}
+    <div className="app-shell">
+      <nav className="main-nav">
+        <div className="brand">Digital Weather Map</div>
+
+        <div className="nav-links">
+          <Link to="/about">About</Link>
+          <Link to="/contact">Contact</Link>
+          <Link to="/map">Map</Link>
+
+          {!loggedIn ? (
+            <Link className="nav-cta" to="/login">
+              Login
+            </Link>
+          ) : (
+            <button className="nav-logout" onClick={handleLogout}>
+              Logout
+            </button>
+          )}
+        </div>
       </nav>
-      <Routes>
-        <Route path="/register" element={<RegisterPage onRegisterSuccess={() => setLoggedIn(true)} />} />
-        <Route path="/login" element={<LoginPage onLoginSuccess={() => setLoggedIn(true)} />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/map" element={
-          <ProtectedRoute>
-            <Map />
-          </ProtectedRoute>
-        } />
-      </Routes>
+
+      <main className="main-content">
+        <Routes>
+          <Route
+            path="/register"
+            element={
+              <RegisterPage onRegisterSuccess={() => setLoggedIn(true)} />
+            }
+          />
+          <Route
+            path="/login"
+            element={<LoginPage onLoginSuccess={() => setLoggedIn(true)} />}
+          />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route
+            path="/map"
+            element={
+              <ProtectedRoute>
+                <Map />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+      </main>
     </div>
   );
 }

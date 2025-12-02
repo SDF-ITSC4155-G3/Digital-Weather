@@ -222,6 +222,6 @@ if __name__ == "__main__":
 
     clear_database()  # Clear existing data
 
-    devices = generate_clustered_devices(clusters, total_devices=2000)
+    devices = generate_clustered_devices(clusters, total_devices=15000)
     # devices = generate_devices(clusters, 2000, 500)
     insert_devices_into_db(devices)

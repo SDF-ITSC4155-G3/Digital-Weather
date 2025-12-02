@@ -1,0 +1,23 @@
+.about-page {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.about-section {
+  margin-top: 1.5rem;
+  font-size: 0.96rem;
+  line-height: 1.7;
+  color: var(--text-muted);
+}
+
+.about-subheading {
+  font-size: 1.05rem;
+  margin-bottom: 0.4rem;
+  font-weight: 600;
+  color: #e5e7eb;
+}
+
+.about-highlight {
+  color: var(--accent);
+  font-weight: 500;
+}
