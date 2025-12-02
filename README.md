@@ -30,6 +30,14 @@ In the project's client directory, run:
 
 In the project's flask-server directory, run:
 
+### 'pip install flask_sqlalchemy'
+
+### 'pip install PyJWT'
+
+### 'pip install jwt'
+
+### 'pip install flask_cours'
+
 ### 'python server.py'
 
 In the client directory, run:
