@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { getAuthHeaders } from '../utils/auth.js';
 import './ReviewModal.css';
 
-function ReviewModal({ pin, onClose, onReviewSubmitted }) {
+function ReviewModal({ pin, currentUser, onClose, onReviewSubmitted, onEditPin, onDeletePin }) {
   const [reviews, setReviews] = useState([]);
   const [rating, setRating] = useState(5);
   const [comment, setComment] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [editingReview, setEditingReview] = useState(null);
 
   useEffect(() => {
     if (pin) {
@@ -32,18 +33,38 @@ function ReviewModal({ pin, onClose, onReviewSubmitted }) {
     setLoading(true);
 
     try {
-      const res = await fetch(`/api/pins/${pin.id}/reviews`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          ...getAuthHeaders()
-        },
-        body: JSON.stringify({ rating, comment })
-      });
+      if (editingReview) {
+        // Update existing review
+        const res = await fetch(`/api/reviews/${editingReview.id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            ...getAuthHeaders()
+          },
+          body: JSON.stringify({ rating, comment })
+        });
 
-      if (!res.ok) {
-        const data = await res.json();
-        throw new Error(data.message || 'Failed to submit review');
+        if (!res.ok) {
+          const data = await res.json();
+          throw new Error(data.message || 'Failed to update review');
+        }
+
+        setEditingReview(null);
+      } else {
+        // Create new review
+        const res = await fetch(`/api/pins/${pin.id}/reviews`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            ...getAuthHeaders()
+          },
+          body: JSON.stringify({ rating, comment })
+        });
+
+        if (!res.ok) {
+          const data = await res.json();
+          throw new Error(data.message || 'Failed to submit review');
+        }
       }
 
       setRating(5);
@@ -78,6 +99,20 @@ function ReviewModal({ pin, onClose, onReviewSubmitted }) {
     }
   };
 
+  const handleEditReview = (review) => {
+    setEditingReview(review);
+    setRating(review.rating);
+    setComment(review.comment || '');
+    setError('');
+  };
+
+  const handleCancelEdit = () => {
+    setEditingReview(null);
+    setRating(5);
+    setComment('');
+    setError('');
+  };
+
   if (!pin) return null;
 
   return (
@@ -93,13 +128,19 @@ function ReviewModal({ pin, onClose, onReviewSubmitted }) {
             <p><strong>Created by:</strong> {pin.username}</p>
             {pin.description && <p><strong>Description:</strong> {pin.description}</p>}
             <p><strong>Location:</strong> {pin.latitude.toFixed(6)}, {pin.longitude.toFixed(6)}</p>
+            {currentUser && currentUser.id === pin.user_id && (
+              <div className="pin-actions">
+                <button className="btn-edit-pin" onClick={() => { onEditPin(pin); onClose(); }}>Edit Pin</button>
+                <button className="btn-delete-pin" onClick={() => { onDeletePin(pin.id); onClose(); }}>Delete Pin</button>
+              </div>
+            )}
           </div>
 
           <div className="reviews-section">
             <h3>Reviews ({reviews.length})</h3>
 
             <form className="review-form" onSubmit={handleSubmitReview}>
-              <h4>Add Your Review</h4>
+              <h4>{editingReview ? 'Edit Your Review' : 'Add Your Review'}</h4>
               {error && <div className="error-message">{error}</div>}
 
               <div className="form-group">
@@ -129,8 +170,13 @@ function ReviewModal({ pin, onClose, onReviewSubmitted }) {
               </div>
 
               <button type="submit" className="submit-button" disabled={loading}>
-                {loading ? 'Submitting...' : 'Submit Review'}
+                {loading ? (editingReview ? 'Updating...' : 'Submitting...') : (editingReview ? 'Update Review' : 'Submit Review')}
               </button>
+              {editingReview && (
+                <button type="button" className="cancel-edit-button" onClick={handleCancelEdit}>
+                  Cancel Edit
+                </button>
+              )}
             </form>
 
             <div className="reviews-list">
@@ -151,12 +197,22 @@ function ReviewModal({ pin, onClose, onReviewSubmitted }) {
                       </div>
                     </div>
                     {review.comment && <p className="review-comment">{review.comment}</p>}
-                    <button
-                      className="delete-review-button"
-                      onClick={() => handleDeleteReview(review.id)}
-                    >
-                      Delete
-                    </button>
+                    {currentUser && currentUser.id === review.user_id && (
+                      <div className="review-actions">
+                        <button
+                          className="edit-review-button"
+                          onClick={() => handleEditReview(review)}
+                        >
+                          Edit
+                        </button>
+                        <button
+                          className="delete-review-button"
+                          onClick={() => handleDeleteReview(review.id)}
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    )}
                   </div>
                 ))
               )}

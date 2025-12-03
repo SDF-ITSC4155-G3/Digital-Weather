@@ -72,6 +72,40 @@ Create a new pin on the map.
 }
 ```
 
+### PUT /api/pins/<pin_id>
+
+Update an existing pin. Only the pin owner can update their pins.
+
+**Authentication:** Required
+
+**Request Body:**
+
+```json
+{
+  "title": "Updated title",
+  "description": "Updated description (optional)"
+}
+```
+
+**Response:**
+
+```json
+{
+  "message": "Pin updated successfully",
+  "pin": {
+    "id": 1,
+    "user_id": 1,
+    "username": "john_doe",
+    "latitude": 35.3074,
+    "longitude": -80.7353,
+    "title": "Updated title",
+    "description": "Updated description",
+    "created_at": "2025-12-02T10:30:00",
+    "review_count": 0
+  }
+}
+```
+
 ### DELETE /api/pins/<pin_id>
 
 Delete a pin. Only the pin owner can delete their own pins.

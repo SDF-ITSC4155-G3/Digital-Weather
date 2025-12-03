@@ -90,6 +90,38 @@ def create_pin(current_user):
         return jsonify({'message': f'Failed to create pin: {str(e)}'}), 500
 
 
+@app.route("/api/pins/<int:pin_id>", methods=["PUT"])
+@token_required
+def update_pin(current_user, pin_id):
+    """Update a pin (only owner can update)."""
+    try:
+        pin = Pin.query.get(pin_id)
+        if not pin:
+            return jsonify({'message': 'Pin not found'}), 404
+
+        if pin.user_id != current_user.id:
+            return jsonify({'message': 'Unauthorized to update this pin'}), 403
+
+        data = request.get_json()
+        if not data:
+            return jsonify({'message': 'No JSON data received'}), 400
+
+        if 'title' in data:
+            if not data['title']:
+                return jsonify({'message': 'Title cannot be empty'}), 400
+            pin.title = data['title']
+
+        if 'description' in data:
+            pin.description = data['description']
+
+        db.session.commit()
+
+        return jsonify({'message': 'Pin updated successfully', 'pin': pin.to_dict()}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'message': f'Failed to update pin: {str(e)}'}), 500
+
+
 @app.route("/api/pins/<int:pin_id>", methods=["DELETE"])
 @token_required
 def delete_pin(current_user, pin_id):

@@ -66,6 +66,41 @@
   color: #555;
 }
 
+.pin-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.btn-edit-pin,
+.btn-delete-pin {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+.btn-edit-pin {
+  background-color: #28a745;
+  color: white;
+}
+
+.btn-edit-pin:hover {
+  background-color: #218838;
+}
+
+.btn-delete-pin {
+  background-color: #dc3545;
+  color: white;
+}
+
+.btn-delete-pin:hover {
+  background-color: #c82333;
+}
+
 .reviews-section h3 {
   margin-top: 0;
   margin-bottom: 20px;
@@ -136,6 +171,7 @@
   font-size: 16px;
   font-weight: 600;
   transition: background-color 0.2s;
+  margin-right: 10px;
 }
 
 .submit-button:hover:not(:disabled) {
@@ -145,6 +181,22 @@
 .submit-button:disabled {
   background-color: #ccc;
   cursor: not-allowed;
+}
+
+.cancel-edit-button {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+.cancel-edit-button:hover {
+  background-color: #5a6268;
 }
 
 .error-message {
@@ -203,16 +255,30 @@
   line-height: 1.5;
 }
 
+.review-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.edit-review-button,
 .delete-review-button {
-  background-color: #dc3545;
+  background-color: #007bff;
   color: white;
   border: none;
   padding: 6px 12px;
   border-radius: 4px;
   cursor: pointer;
   font-size: 12px;
-  margin-top: 8px;
   transition: background-color 0.2s;
+}
+
+.edit-review-button:hover {
+  background-color: #0056b3;
+}
+
+.delete-review-button {
+  background-color: #dc3545;
 }
 
 .delete-review-button:hover {

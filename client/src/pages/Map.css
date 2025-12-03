@@ -6,6 +6,34 @@
   text-align: left;
 }
 
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background-color: rgba(0, 123, 255, 0.1);
+  border-radius: 20px;
+  border: 1px solid rgba(0, 123, 255, 0.3);
+}
+
+.user-icon {
+  font-size: 20px;
+}
+
+.username {
+  font-weight: 600;
+  color: #007bff;
+  font-size: 0.95rem;
+}
+
 .site-title {
   margin: 0;
   font-size: 1.7rem;

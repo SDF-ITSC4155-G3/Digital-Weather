@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { getAuthHeaders } from '../utils/auth.js';
+import { getAuthHeaders, getCurrentUser } from '../utils/auth.js';
 import ReviewModal from '../components/ReviewModal.jsx';
 import "./Map.css";
 
@@ -12,6 +12,8 @@ function Map() {
   const [newPinLocation, setNewPinLocation] = useState(null);
   const [pinTitle, setPinTitle] = useState('');
   const [pinDescription, setPinDescription] = useState('');
+  const [currentUser, setCurrentUser] = useState(null);
+  const [editingPin, setEditingPin] = useState(null);
   const gridSize = 100;
 
 useEffect(() => {
@@ -46,7 +48,13 @@ useEffect(() => {
 
 useEffect(() => {
   fetchPins();
+  loadCurrentUser();
 }, []);
+
+const loadCurrentUser = async () => {
+  const user = await getCurrentUser();
+  setCurrentUser(user);
+};
 
 const fetchPins = async () => {
   try {
@@ -65,6 +73,14 @@ const handleMapClick = (e) => {
   const y = ((e.clientY - rect.top) / rect.height) * 100;
 
   setNewPinLocation({ latitude: y, longitude: x });
+  setEditingPin(null);
+  setShowPinForm(true);
+};
+
+const handleEditPin = (pin) => {
+  setEditingPin(pin);
+  setPinTitle(pin.title);
+  setPinDescription(pin.description || '');
   setShowPinForm(true);
 };
 
@@ -77,29 +93,51 @@ const handleCreatePin = async (e) => {
   }
 
   try {
-    const res = await fetch('/api/pins', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        ...getAuthHeaders()
-      },
-      body: JSON.stringify({
-        latitude: newPinLocation.latitude,
-        longitude: newPinLocation.longitude,
-        title: pinTitle,
-        description: pinDescription
-      })
-    });
+    if (editingPin) {
+      // Update existing pin
+      const res = await fetch(`/api/pins/${editingPin.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          ...getAuthHeaders()
+        },
+        body: JSON.stringify({
+          title: pinTitle,
+          description: pinDescription
+        })
+      });
 
-    if (!res.ok) {
-      const data = await res.json();
-      throw new Error(data.message || 'Failed to create pin');
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.message || 'Failed to update pin');
+      }
+    } else {
+      // Create new pin
+      const res = await fetch('/api/pins', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...getAuthHeaders()
+        },
+        body: JSON.stringify({
+          latitude: newPinLocation.latitude,
+          longitude: newPinLocation.longitude,
+          title: pinTitle,
+          description: pinDescription
+        })
+      });
+
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.message || 'Failed to create pin');
+      }
     }
 
     setPinTitle('');
     setPinDescription('');
     setShowPinForm(false);
     setNewPinLocation(null);
+    setEditingPin(null);
     fetchPins();
   } catch (err) {
     alert('Error: ' + err.message);
@@ -111,6 +149,7 @@ const handleCancelPin = () => {
   setNewPinLocation(null);
   setPinTitle('');
   setPinDescription('');
+  setEditingPin(null);
 };
 
 const handleDeletePin = async (pinId) => {
@@ -150,11 +189,21 @@ const handleDeletePin = async (pinId) => {
   return (
     <div className="page map-page">
       <header className="site-header site-header--middle">
-        <h1 className="site-title">Digital Weather Map - UNC Charlotte</h1>
-        <p className="site-subtitle">
-          Live visualization of grid-based weather data over campus.
-          Click on the map to place a pin!
-        </p>
+        <div className="header-content">
+          <div>
+            <h1 className="site-title">Digital Weather Map - UNC Charlotte</h1>
+            <p className="site-subtitle">
+              Live visualization of grid-based weather data over campus.
+              Click on the map to place a pin!
+            </p>
+          </div>
+          {currentUser && (
+            <div className="user-info">
+              <span className="user-icon">👤</span>
+              <span className="username">{currentUser.username}</span>
+            </div>
+          )}
+        </div>
       </header>
 
       <div className="map-card page-card">
@@ -251,7 +300,7 @@ const handleDeletePin = async (pinId) => {
       {showPinForm && (
         <div className="pin-form-overlay" onClick={handleCancelPin}>
           <div className="pin-form-content" onClick={(e) => e.stopPropagation()}>
-            <h3>Create New Pin</h3>
+            <h3>{editingPin ? 'Edit Pin' : 'Create New Pin'}</h3>
             <form onSubmit={handleCreatePin}>
               <div className="form-group">
                 <label htmlFor="pinTitle">Title:</label>
@@ -275,7 +324,7 @@ const handleDeletePin = async (pinId) => {
                 />
               </div>
               <div className="form-buttons">
-                <button type="submit" className="btn-submit">Create Pin</button>
+                <button type="submit" className="btn-submit">{editingPin ? 'Update Pin' : 'Create Pin'}</button>
                 <button type="button" className="btn-cancel" onClick={handleCancelPin}>Cancel</button>
               </div>
             </form>
@@ -287,8 +336,11 @@ const handleDeletePin = async (pinId) => {
       {selectedPin && (
         <ReviewModal
           pin={selectedPin}
+          currentUser={currentUser}
           onClose={() => setSelectedPin(null)}
           onReviewSubmitted={fetchPins}
+          onEditPin={handleEditPin}
+          onDeletePin={handleDeletePin}
         />
       )}
     </div>

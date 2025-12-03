@@ -44,3 +44,21 @@ export const verifyToken = async () => {
     return false;
   }
 };
+
+export const getCurrentUser = async () => {
+  const token = getToken();
+  if (!token) return null;
+
+  try {
+    const res = await fetch('/auth/verify', {
+      method: 'GET',
+      headers: getAuthHeaders()
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    return { id: data.user_id, username: data.username };
+  } catch (error) {
+    console.error('Failed to get current user:', error);
+    return null;
+  }
+};
