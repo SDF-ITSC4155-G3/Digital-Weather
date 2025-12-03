@@ -1,10 +1,17 @@
 import React, {useState, useEffect} from 'react';
 import { getAuthHeaders } from '../utils/auth.js';
+import ReviewModal from '../components/ReviewModal.jsx';
 import "./Map.css";
 
 function Map() {
 
   const [data, setData] = useState({ hello_world: [] });
+  const [pins, setPins] = useState([]);
+  const [selectedPin, setSelectedPin] = useState(null);
+  const [showPinForm, setShowPinForm] = useState(false);
+  const [newPinLocation, setNewPinLocation] = useState(null);
+  const [pinTitle, setPinTitle] = useState('');
+  const [pinDescription, setPinDescription] = useState('');
   const gridSize = 100;
 
 useEffect(() => {
@@ -37,6 +44,96 @@ useEffect(() => {
   return () => clearInterval(interval);
 }, []);
 
+useEffect(() => {
+  fetchPins();
+}, []);
+
+const fetchPins = async () => {
+  try {
+    const res = await fetch('/api/pins');
+    if (!res.ok) throw new Error('Failed to fetch pins');
+    const data = await res.json();
+    setPins(data);
+  } catch (err) {
+    console.error('Error fetching pins:', err);
+  }
+};
+
+const handleMapClick = (e) => {
+  const rect = e.currentTarget.getBoundingClientRect();
+  const x = ((e.clientX - rect.left) / rect.width) * 100;
+  const y = ((e.clientY - rect.top) / rect.height) * 100;
+
+  setNewPinLocation({ latitude: y, longitude: x });
+  setShowPinForm(true);
+};
+
+const handleCreatePin = async (e) => {
+  e.preventDefault();
+
+  if (!pinTitle.trim()) {
+    alert('Please enter a title for the pin');
+    return;
+  }
+
+  try {
+    const res = await fetch('/api/pins', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        ...getAuthHeaders()
+      },
+      body: JSON.stringify({
+        latitude: newPinLocation.latitude,
+        longitude: newPinLocation.longitude,
+        title: pinTitle,
+        description: pinDescription
+      })
+    });
+
+    if (!res.ok) {
+      const data = await res.json();
+      throw new Error(data.message || 'Failed to create pin');
+    }
+
+    setPinTitle('');
+    setPinDescription('');
+    setShowPinForm(false);
+    setNewPinLocation(null);
+    fetchPins();
+  } catch (err) {
+    alert('Error: ' + err.message);
+  }
+};
+
+const handleCancelPin = () => {
+  setShowPinForm(false);
+  setNewPinLocation(null);
+  setPinTitle('');
+  setPinDescription('');
+};
+
+const handleDeletePin = async (pinId) => {
+  if (!window.confirm('Are you sure you want to delete this pin?')) return;
+
+  try {
+    const res = await fetch(`/api/pins/${pinId}`, {
+      method: 'DELETE',
+      headers: getAuthHeaders()
+    });
+
+    if (!res.ok) {
+      const data = await res.json();
+      throw new Error(data.message || 'Failed to delete pin');
+    }
+
+    fetchPins();
+    setSelectedPin(null);
+  } catch (err) {
+    alert('Error: ' + err.message);
+  }
+};
+
 
   const getColor = (value) => {
     const colors = [
@@ -56,6 +153,7 @@ useEffect(() => {
         <h1 className="site-title">Digital Weather Map - UNC Charlotte</h1>
         <p className="site-subtitle">
           Live visualization of grid-based weather data over campus.
+          Click on the map to place a pin!
         </p>
       </header>
 
@@ -68,6 +166,7 @@ useEffect(() => {
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}
+          onClick={handleMapClick}
         >
           {data.hello_world && data.hello_world.length > 0
             ? data.hello_world.map((value, i) => {
@@ -86,6 +185,38 @@ useEffect(() => {
                 );
               })
             : null}
+
+          {/* Render pins */}
+          {pins.map((pin) => (
+            <div
+              key={pin.id}
+              className="map-pin"
+              style={{
+                top: `${pin.latitude}%`,
+                left: `${pin.longitude}%`,
+              }}
+              onClick={(e) => {
+                e.stopPropagation();
+                setSelectedPin(pin);
+              }}
+              title={pin.title}
+            >
+              📍
+            </div>
+          ))}
+
+          {/* Show preview pin while creating */}
+          {newPinLocation && (
+            <div
+              className="map-pin preview-pin"
+              style={{
+                top: `${newPinLocation.latitude}%`,
+                left: `${newPinLocation.longitude}%`,
+              }}
+            >
+              📍
+            </div>
+          )}
         </div>
 
         {/* NEW: legend */}
@@ -115,6 +246,51 @@ useEffect(() => {
           </div>
         </div>
       </div>
+
+      {/* Pin creation form */}
+      {showPinForm && (
+        <div className="pin-form-overlay" onClick={handleCancelPin}>
+          <div className="pin-form-content" onClick={(e) => e.stopPropagation()}>
+            <h3>Create New Pin</h3>
+            <form onSubmit={handleCreatePin}>
+              <div className="form-group">
+                <label htmlFor="pinTitle">Title:</label>
+                <input
+                  type="text"
+                  id="pinTitle"
+                  value={pinTitle}
+                  onChange={(e) => setPinTitle(e.target.value)}
+                  placeholder="Enter pin title"
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="pinDescription">Description:</label>
+                <textarea
+                  id="pinDescription"
+                  value={pinDescription}
+                  onChange={(e) => setPinDescription(e.target.value)}
+                  placeholder="Enter description (optional)"
+                  rows="3"
+                />
+              </div>
+              <div className="form-buttons">
+                <button type="submit" className="btn-submit">Create Pin</button>
+                <button type="button" className="btn-cancel" onClick={handleCancelPin}>Cancel</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Review modal */}
+      {selectedPin && (
+        <ReviewModal
+          pin={selectedPin}
+          onClose={() => setSelectedPin(null)}
+          onReviewSubmitted={fetchPins}
+        />
+      )}
     </div>
   );
 }
