@@ -34,8 +34,6 @@ In the project's flask-server directory, run:
 
 ### 'pip install PyJWT'
 
-### 'pip install jwt'
-
 ### 'pip install flask_cours'
 
 ### 'python server.py'
