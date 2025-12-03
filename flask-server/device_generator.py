@@ -24,7 +24,7 @@ MAX_LONGITUDE = -80.7275
 clusters = [
     {"name": "Atkins Library", "center": (35.30579, -80.73212), "radius": 0.00040, "weight": 0.20},                 
     {"name": "Popp Martin Student Union", "center": (35.30865, -80.73369), "radius": 0.00040, "weight": 0.20},  
-    {"name": "Woodward Hall", "center": (35.30736, -80.73558), "radius": 0.00040, "weight": 0.08},
+    {"name": "Woodward Hall", "center": (35.30730, -80.73550), "radius": 0.00040, "weight": 0.08},
     {"name": "Barnhardt SAC", "center": (35.30635, -80.73443), "radius": 0.00050, "weight": 0.08},
     {"name": "Belk Gym", "center": (35.30539, -80.73561), "radius": 0.00040, "weight": 0.07},
     {"name": "Fretwell", "center": (35.30606, -80.72910), "radius": 0.00030, "weight": 0.07},
@@ -57,12 +57,20 @@ clusters = [
     {"name": "CHHS", "center": (35.30739, -80.73335), "radius": 0.00050, "weight": 0.05},
     {"name": "Cone", "center": (35.30538, -80.73317), "radius": 0.00040, "weight": 0.05},
     {"name": "KcKnight Hall", "center": (35.30483, -80.73330), "radius": 0.00025, "weight": 0.03},
-    {"name": "Track Facility", "center": (35.30589, -80.73728), "radius": 0.00010, "weight": 0.01},
-    {"name": "Tennis Facility", "center": (35.30733, -80.73676), "radius": 0.00005, "weight": 0.005},
-    {"name": "Memorial Hall", "center": (35.30379, -80.73585), "radius": 0.000510, "weight": 0.02},
-    {"name": "Martin Hall", "center": (35.31005, -80.72755), "radius": 0.00050, "weight": 0.05}
+    # {"name": "Track Facility", "center": (35.30589, -80.73728), "radius": 0.00010, "weight": 0.01},
+    # {"name": "Tennis Facility", "center": (35.30733, -80.73676), "radius": 0.00005, "weight": 0.005},
+    {"name": "Memorial Hall", "center": (35.30379, -80.73582), "radius": 0.00020, "weight": 0.02},
+    {"name": "Martin Hall", "center": (35.31005, -80.72755), "radius": 0.00050, "weight": 0.05},
+    {"name": "Prospector", "center": (35.30681, -80.73087), "radius": 0.00035, "weight": 0.12},
+   
+    {"name": "Student Health Center", "center": (35.31049, -80.72957), "radius": 0.00030, "weight": 0.07},
+    {"name": "Christine F. Price Center", "center": (35.31023, -80.73009), "radius": 0.00010, "weight": 0.01},
+    {"name": "Auxillary Building near Klein Hall", "center": (35.30950, -80.72977), "radius": 0.00015, "weight": 0.0025},
+    {"name": "Klein Hall", "center": (35.30851, -80.73025), "radius": 0.00020, "weight": 0.02},
+    {"name": "Botanical Garden's Building", "center": (35.30781, -80.72978), "radius": 0.00010, "weight": 0.0025},
+    {"name": "49ers ID Office", "center": (35.30773, -80.73053), "radius": 0.00015, "weight": 0.01}
 
-    
+
 
 ]
 
